@@ -1,6 +1,6 @@
-const handleProfileGet = (req, res, postgres) => {
+const handleProfileGet = (req, res, db) => {
   const { id } = req.params;
-  postgres.select('*').from('users').where({id})
+  db.select('*').from('users').where({id})
     .then(user => {
       if (user.length) {
         res.json(user[0])
@@ -8,9 +8,26 @@ const handleProfileGet = (req, res, postgres) => {
         res.status(400).json('Not found')
       }
     })
-    .catch(err => res.status(400).json('Error in getting user'))
+    .catch(err => res.status(400).json('Error getting user'))
+}
+
+const handleProfileUpdate = (req, res, db) => {
+  const { id } = req.params
+  const { name, age } = req.body.formInput
+  db('users')
+  .where({ id })
+  .update({ name })
+  .then(resp => {
+    if (resp) {
+      res.json("Success")
+    } else {
+      res.status(400).json('Not found')
+    }
+  })
+  .catch(err => res.status(400).json('Error updating user'))
 }
 
 module.exports = {
-  handleProfileGet
+  handleProfileGet,
+  handleProfileUpdate
 }

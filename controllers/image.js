@@ -17,9 +17,9 @@ const handleApiCall = (req, res) => {
     .catch(err => res.status(400).json("Unable to work with API"));
 };
 
-const handleImage = (req, res, postgres) => {
+const handleImage = (req, res, db) => {
   const { id } = req.body;
-  postgres("users")
+  db("users")
     .where("id", "=", id)
     .increment("entries", 1)
     .returning("entries")
