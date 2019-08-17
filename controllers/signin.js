@@ -28,11 +28,11 @@ const checkUsernamePassword = (db, bcrypt, req, res) => {
 };
 const getAuthTokenId = (res, req) => {
   const { authorization } = req.headers;
-  return redisClient.get(authorization, (err, reply)=> {
+  return redisClient.get(authorization, (err, reply) => {
     if (err || !reply) {
-      return res.status(400).json('Unauthorized')
+      return res.status(400).json("Unauthorized");
     }
-    return res.json({id: reply})
+    return res.json({ id: reply });
   });
 };
 
@@ -49,7 +49,7 @@ const createSessions = user => {
   const token = signToken(email);
   return setToken(token, id)
     .then(() => {
-      return { success: "true", userId: id, token };
+      return { success: "true", id, token };
     })
     .catch(console.log);
 };
