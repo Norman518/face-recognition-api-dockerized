@@ -38,8 +38,7 @@ const getAuthTokenId = (res, req) => {
 
 const signToken = email => {
   const jwtPayload = { email };
-  /* return jwt.sign(jwtPayload, process.env.JWTSECRET); */
-  return jwt.sign(jwtPayload, "JTWSECRET", { expiresIn: "7 days" });
+  return jwt.sign(jwtPayload, process.env.JWTSECRET, { expiresIn: "7 days" });
 };
 const setToken = (token, id) => {
   return Promise.resolve(redisClient.set(token, id));
